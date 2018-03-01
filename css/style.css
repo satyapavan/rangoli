@@ -3,3 +3,8 @@
 	font-size-adjust: x-large;
 	color: #fff;
 }
+
+.slider-wrapper {
+  display: inline-block;
+  padding: 0;
+}
