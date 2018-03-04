@@ -10,9 +10,9 @@ var Hypotrochoid = function(R, r, d) {
   console.log ("Hypotrochoid ->", R, r, d );
   
   // officially a hypotrochoid has R > r > d (in the analog world)
-  this.R = 10; // R;
-  this.r = 5; // r;
-  this.d = 1; // d;
+  this.R = R;
+  this.r = r;
+  this.d = d;
 
   this.init();
 }
@@ -30,7 +30,14 @@ Hypotrochoid.prototype = {
         var x = ( (this.R - this.r) * Math.cos(theta) ) + ( this.d * Math.cos( ( (this.R - this.r) / this.r) * theta) ) ;
         var y = ( (this.R - this.r) * Math.sin(theta) ) - ( this.d * Math.sin( ( (this.R - this.r) / this.r) * theta) ) ;
 
+        x = this.zoomer(x);
+        y = this.zoomer(y);
+
         return new Coordinates(x, y);
+    },
+
+    zoomer: function(value) {
+        return (value * 10) + 300;
     }
 }
 
@@ -44,15 +51,18 @@ Draw.prototype = {
 
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
-        ctx.moveTo(250,250);
+
+        console.log(canvas.width, canvas.height);
+        ctx.clearRect(0, 0, 1000, 1000);
 
         var objCoOrd;
-        for (var itr = 1; itr <= 360; ++itr) {
-            theta = ( (2 * Math.PI) / itr );
+        for (var itr = 1; itr <= 180; itr += 1) {
+            console.log(itr);
+            theta = ( itr / (2 * Math.PI) );
             objCoOrd = h.getNextXY(theta);
-            ctx.lineTo(( 10 * objCoOrd.x) + 500, ( 10 * objCoOrd.y) + 500);
+            ctx.lineTo(objCoOrd.x, objCoOrd.y);
             ctx.stroke();
-            ctx.moveTo(( 10 * objCoOrd.x) + 500, ( 10 * objCoOrd.y) + 500);
+            ctx.moveTo(objCoOrd.x, objCoOrd.y);
         }
 
     }
@@ -65,18 +75,22 @@ function startRangoli() {
     var varInnerR   = document.getElementById("inner_r");
     var varDistance = document.getElementById("distance");
 
-    h = new Hypotrochoid(varOuterR.value, varInnerR.value, varDistance.value);
     var objDraw = new Draw();
+
+    h = new Hypotrochoid(varOuterR.value, varInnerR.value, varDistance.value);
     objDraw.plot(h);
 
     varOuterR.onchange = function() {
         h = new Hypotrochoid(this.value, varInnerR.value, varDistance.value);
+        objDraw.plot(h);
     }
     varInnerR.onchange = function() {
         h = new Hypotrochoid(varOuterR.value, this.value, varDistance.value);
+        objDraw.plot(h);
     }
     varDistance.onchange = function() {
         h = new Hypotrochoid(varOuterR.value, varInnerR.value, this.value);
+        objDraw.plot(h);
     }
 
 }
