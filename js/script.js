@@ -1,6 +1,6 @@
 
 var Coordinates = function(x, y) {
-    console.log("Entering into Coordinates::", x, y);
+    // console.log("Entering into Coordinates::", x, y);
 
     this.x = x;
     this.y = y;
@@ -24,7 +24,7 @@ Hypotrochoid.prototype = {
     },
 
     getNextXY: function(theta) {
-        console.log("Entering into Hypotrochoid::getNextXY -> theta=", theta);
+        // console.log("Entering into Hypotrochoid::getNextXY -> theta=", theta);
 
         // This is based on https://en.wikipedia.org/wiki/Hypotrochoid
         var x = ( (this.R - this.r) * Math.cos(theta) ) + ( this.d * Math.cos( ( (this.R - this.r) / this.r) * theta) ) ;
@@ -38,33 +38,43 @@ Hypotrochoid.prototype = {
 
     zoomer: function(value) {
         return (value * 10) + 300;
+    },
+
+    getMax: function() {
+        // console.log(Math.min( (this.r / gcd ( this.R, this.r ) ), 1000 ) * 2 * Math.PI);
+        return Math.min( (this.r / gcd ( this.R, this.r ) ), 1000 ) * 2 * Math.PI;
     }
 }
 
 var Draw = function() {
     console.log("Entering into Draw");
+    var canvas;
 }
 
 Draw.prototype = {
     plot: function(h) {
-        console.log("Entering into Draw::plot");
+        console.log("Entering into Draw::plot", this.canvas);
 
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d");
+        if(this.canvas !== undefined) {
+            console.log(this.canvas.getContext("2d"));
+            this.canvas.getContext("2d").clearRect(0, 0, this.canvas.width, this.canvas.height);
+        }
 
-        console.log(canvas.width, canvas.height);
-        ctx.clearRect(0, 0, 1000, 1000);
+        this.canvas = document.getElementById("myCanvas");
+        var ctx = this.canvas.getContext("2d");
 
         var objCoOrd;
-        for (var itr = 1; itr <= 180; itr += 1) {
-            console.log(itr);
-            theta = ( itr / (2 * Math.PI) );
+        var theta = 0; // radians
+        // for (var itr = 1; itr <= 180; itr += 1) {
+        do{
+            // console.log(itr);
+            // theta = ( itr / (2 * Math.PI) );
             objCoOrd = h.getNextXY(theta);
             ctx.lineTo(objCoOrd.x, objCoOrd.y);
             ctx.stroke();
             ctx.moveTo(objCoOrd.x, objCoOrd.y);
-        }
-
+            theta += (Math.PI / 100);
+        } while( theta <= h.getMax());
     }
 }
 
@@ -96,3 +106,11 @@ function startRangoli() {
 }
 
 window.addEventListener("DOMContentLoaded", startRangoli, false);
+
+var gcd = function(a, b) {
+  if ( ! b) {
+    // console.log("GCD: = ", a);
+    return a;
+  }
+  return gcd(b, a % b);
+};
