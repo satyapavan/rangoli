@@ -49,19 +49,22 @@ Hypotrochoid.prototype = {
 var Draw = function() {
     console.log("Entering into Draw");
     var canvas;
+    var ctx;
 }
 
 Draw.prototype = {
     plot: function(h) {
-        console.log("Entering into Draw::plot", this.canvas);
+        console.log("Entering into Draw::plot");
 
-        if(this.canvas !== undefined) {
-            console.log(this.canvas.getContext("2d"));
-            this.canvas.getContext("2d").clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if(this.canvas === undefined) {
+            this.canvas = document.getElementById("myCanvas");
+            this.ctx = this.canvas.getContext("2d");
         }
 
-        this.canvas = document.getElementById("myCanvas");
-        var ctx = this.canvas.getContext("2d");
+        console.log(this.canvas.getContext("2d"));
+        console.log(this.canvas, this.ctx);
+        console.log(this.canvas.width, this.canvas.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         var objCoOrd;
         var theta = 0; // radians
@@ -70,9 +73,9 @@ Draw.prototype = {
             // console.log(itr);
             // theta = ( itr / (2 * Math.PI) );
             objCoOrd = h.getNextXY(theta);
-            ctx.lineTo(objCoOrd.x, objCoOrd.y);
-            ctx.stroke();
-            ctx.moveTo(objCoOrd.x, objCoOrd.y);
+            this.ctx.lineTo(objCoOrd.x, objCoOrd.y);
+            this.ctx.stroke();
+            this.ctx.moveTo(objCoOrd.x, objCoOrd.y);
             theta += (Math.PI / 100);
         } while( theta <= h.getMax());
     }
@@ -114,3 +117,24 @@ var gcd = function(a, b) {
   }
   return gcd(b, a % b);
 };
+
+/**
+ * This is the function that will take care of image extracting and
+ * setting proper filename for the download.
+ * IMPORTANT: Call it from within a onclick event.
+*/
+function downloadCanvas(link, canvasId, filename) {
+    console.log("Entering into downloadCanvas with values:", link, canvasId, filename);
+    link.href = document.getElementById(canvasId).toDataURL('image/png');
+    link.download = filename;
+    console.log(link.href);
+
+}
+
+/** 
+ * The event handler for the link's onclick event. We give THIS as a
+ * parameter (=the link element), ID of the canvas and a filename.
+*/
+document.getElementById('download').addEventListener('click', function() {
+    downloadCanvas(this, 'myCanvas', 'rangoli.png');
+}, false);
