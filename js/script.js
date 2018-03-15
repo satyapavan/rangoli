@@ -48,27 +48,24 @@ Hypotrochoid.prototype = {
 
 var Draw = function() {
     console.log("Entering into Draw");
-    var canvas;
-    var ctx;
+
+    this.canvas = document.getElementById("myCanvas");
+    this.ctx = this.canvas.getContext("2d");
 }
 
 Draw.prototype = {
     plot: function(h) {
         console.log("Entering into Draw::plot");
 
-        if(this.canvas === undefined) {
-            this.canvas = document.getElementById("myCanvas");
-            this.ctx = this.canvas.getContext("2d");
-        }
-
-        console.log(this.canvas.getContext("2d"));
-        console.log(this.canvas, this.ctx);
-        console.log(this.canvas.width, this.canvas.height);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         var objCoOrd;
         var theta = 0; // radians
         // for (var itr = 1; itr <= 180; itr += 1) {
+
+        // without this begin and close path calls, the canvas is not cleared even with clearRect call.
+        // this is very very irritating learning
+        this.ctx.beginPath();
         do{
             // console.log(itr);
             // theta = ( itr / (2 * Math.PI) );
@@ -78,6 +75,7 @@ Draw.prototype = {
             this.ctx.moveTo(objCoOrd.x, objCoOrd.y);
             theta += (Math.PI / 100);
         } while( theta <= h.getMax());
+        this.ctx.closePath();
     }
 }
 
