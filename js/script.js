@@ -37,7 +37,7 @@ Hypotrochoid.prototype = {
     },
 
     zoomer: function(value) {
-        return (value * 10) + 300;
+        return (value * 10) + 350;
     },
 
     getMax: function() {
@@ -51,6 +51,8 @@ var Draw = function() {
 
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
+    this.ctx.strokeRect(20,20,150,100);
+    this.ctx.lineWidth=2;
 }
 
 Draw.prototype = {
