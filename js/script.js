@@ -62,7 +62,8 @@ var Draw = function() {
     this.canvas = document.getElementById("myCanvas");
     this.ctx = this.canvas.getContext("2d");
     this.ctx.strokeRect(20,20,150,100);
-    this.ctx.lineWidth=1;
+    this.ctx.strokeStyle = "rgba(255, 255, 51, 0.4)";
+    this.ctx.lineWidth=4;
     this.theta = 0;
 }
 
@@ -82,7 +83,8 @@ Draw.prototype = {
             this.ctx.lineTo(objCoOrd.x, objCoOrd.y);
             this.ctx.stroke();
             this.ctx.moveTo(objCoOrd.x, objCoOrd.y);
-            this.theta += (Math.PI / 500);
+            // this is the step size or increment. too low and there will be rough edges and too low will cause performance issues
+            this.theta += (Math.PI / 7500); 
             itr += 1;
         } while( itr <= 100 && this.theta <= this.h.getMax());
         this.ctx.closePath();
@@ -103,7 +105,7 @@ Draw.prototype = {
 
         this.h = h;
 
-        this.oTimeout = setInterval(this.plotFragment.bind(this), 1000/24);
+        this.oTimeout = setInterval(this.plotFragment.bind(this), 1000/48);
 
         console.log("Leaving Draw::plot");
     }
