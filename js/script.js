@@ -84,7 +84,7 @@ Draw.prototype = {
             this.ctx.stroke();
             this.ctx.moveTo(objCoOrd.x, objCoOrd.y);
             // this is the step size or increment. too low and there will be rough edges and too low will cause performance issues
-            this.theta += (Math.PI / 7500); 
+            this.theta += (Math.PI / 7500);
             itr += 1;
         } while( itr <= 100 && this.theta <= this.h.getMax());
         this.ctx.closePath();
