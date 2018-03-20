@@ -7,6 +7,8 @@ Fusion of mathamatics and computer science. This is an attempt to visualize the 
 ### Screenshots (for Hypotrochoid)
 <div>
   <img src="images/rangoli-R18-r4-d6.5.gif" alt="sample Hypotrochoid">
+  <img src="images/rangoli-R18-r8-d5.5.gif" alt="sample Hypotrochoid">
+
 </div>
 
 ## Reference
