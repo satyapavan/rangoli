@@ -1,59 +1,117 @@
-
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- START - Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111600714-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-111600714-1');
-        </script>
-        <!-- END   - Global site tag (gtag.js) - Google Analytics -->
-        <!-- font for my branding name -->
-        <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
-        <title>Satya Pavan's rangoli generator</title>
-        <!-- below code is for showing the icon as part of browser tab -->
-        <link rel="shortcut icon" href="https://SatyaPavan.github.io/favicon.ico">
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <header>
-            <div class="slider-wrapper">
-                <input id="outer_R"  class="slider" type="range" min="1" max="24" step="0.5" value="18" list="tickmarks" >
-                <input id="inner_r"  class="slider" type="range" min="1" max="12" step="0.5" value="4" list="tickmarks" >
-                <input id="distance" class="slider" type="range" min="1" max="12" step="0.5" list="tickmarks" >
-                <a id="download"><button type="button">Download</button></a>
-                <datalist id="tickmarks">
-                    <option value="1"   label="1">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- START - Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111600714-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-111600714-1');
+    </script>
+    <!-- END   - Global site tag (gtag.js) - Google Analytics -->
+    <!-- font for my branding name -->
+    <link href="https://fonts.googleapis.com/css?family=Caveat" rel="stylesheet">
+    <title>Satya Pavan's rangoli generator</title>
+    <!-- below code is for showing the icon as part of browser tab -->
+    <link rel="shortcut icon" href="https://SatyaPavan.github.io/favicon.ico">
+
+    <!-- Bootstrap CSS -->
+    <link 
+    rel="stylesheet" 
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
+    integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
+    crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="slider-wrapper">
+            <input id="outer_R"  class="slider" type="range" min="1" max="24" step="0.5" value="18" list="tickmarks" >
+            <input id="inner_r"  class="slider" type="range" min="1" max="12" step="0.5" value="4" list="tickmarks" >
+            <input id="distance" class="slider" type="range" min="1" max="12" step="0.5" list="tickmarks" >
+            <a id="download"><button type="button">Download</button></a>
+            <datalist id="tickmarks">
+                <option value="1"   label="1">
                     <option value="12"  label="12">
-                    <option value="24"  label="24">
-                </datalist>
+                        <option value="24"  label="24">
+                        </datalist>
+                    </div>
+                </header>
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Hypotrochoid</h5>
+                    </div>
+                    <div id="main-content">
+                        <canvas id="myCanvas" width="1000" height="1000" >
+                        </canvas>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Hypochoid</h5>
+                    </div>
+                    <div id="main-content">
+                        <canvas id="myCanvas" width="1000" height="1000" >
+                        </canvas>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Epitrochoid</h5>
+                    </div>
+                    <div id="main-content">
+                        <canvas id="myCanvas" width="1000" height="1000" >
+                        </canvas>
+                    </div>
+                </div>
             </div>
-        </header>
-
-        <div id="main-content">
-            <canvas id="myCanvas" width="1000" height="1000" >
-            </canvas>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-
+        
         <footer>
         </footer>
-        <!-- START - Below items are for jQuery to work -->
-        <!--          <script 
-            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" 
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
-            crossorigin="anonymous">
-            </script> -->
-        <!-- END   - Below items are for jQuery to work -->
-        <script src="js/hypotrochoid.js"></script>
-        <script src="js/hypocycloid.js"></script>
-        <script src="js/epicycloid.js"></script>
-        <script src="js/script.js"></script>
-    </body>
+        
+        <!-- START - Below items are for Bootstrap to work -->
+        <script 
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+        crossorigin="anonymous">
+    </script>
+    <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" 
+    crossorigin="anonymous">
+</script>
+<script 
+src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" 
+crossorigin="anonymous">
+</script>
+<!-- END   - Below items are for Bootstrap to work -->
+
+<script src="js/hypotrochoid.js"></script>
+<script src="js/hypocycloid.js"></script>
+<script src="js/epicycloid.js"></script>
+<script src="js/script.js"></script>
+</body>
 </html>
