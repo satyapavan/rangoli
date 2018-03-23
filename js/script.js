@@ -6,11 +6,12 @@ var Coordinates = function(x, y) {
     this.y = y;
 }
 
-var Draw = function() {
-    console.log("Entering into Draw");
+var Draw = function(pShape) {
+    console.log("Entering into Draw for ", pShape);
 
-    this.canvas = document.getElementById("myCanvas");
+    this.canvas = document.getElementById(pShape + "-Canvas");
     this.ctx = this.canvas.getContext("2d");
+    this.ctx.translate(0.5,0.5);
     this.ctx.strokeRect(20,20,150,100);
     this.ctx.strokeStyle = "rgba(255, 255, 51, 0.4)";
     this.ctx.lineWidth=4;
@@ -61,6 +62,24 @@ Draw.prototype = {
     }
 }
 
+function ShapeFactory(type, oR, ir, d) {
+    if( type === "Hypocycloid")
+        return new Hypocycloid(oR, ir, d);
+    if( type === "Hypotrochoid")
+        return new Hypotrochoid(oR, ir, d);
+    if( type === "Epitrochoid")
+        return new Epitrochoid(oR, ir, d);
+    else
+        return null;
+}
+
+function DrawShapes(type, oR, ir, d) {
+    console.log("Entering into DrawShapes::", type, oR, ir, d);
+    var objDraw = new Draw(type);
+    var objShape = ShapeFactory(type, oR, ir, d);
+    objDraw.plot(objShape);
+}
+
 function startRangoli() {
 	console.log("Entering into startRangoli");
 
@@ -68,24 +87,27 @@ function startRangoli() {
     var varInnerR   = document.getElementById("inner_r");
     var varDistance = document.getElementById("distance");
 
-    var objDraw = new Draw();
+    var aShapes = ["Hypocycloid", "Hypotrochoid", "Epitrochoid" ];
 
-    h = new Epitrochoid(varOuterR.value, varInnerR.value, varDistance.value);
-    objDraw.plot(h);
+    for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
+        DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, varDistance.value)
+    }
 
     varOuterR.onchange = function() {
-        h = new Hypotrochoid(this.value, varInnerR.value, varDistance.value);
-        objDraw.plot(h);
+        for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
+            var objShape = DrawShapes(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
+        }
     }
     varInnerR.onchange = function() {
-        h = new Hypotrochoid(varOuterR.value, this.value, varDistance.value);
-        objDraw.plot(h);
+        for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
+            var objShape = DrawShapes(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
+        }
     }
     varDistance.onchange = function() {
-        h = new Hypotrochoid(varOuterR.value, varInnerR.value, this.value);
-        objDraw.plot(h);
+        for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
+            var objShape = DrawShapes(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
+        }
     }
-
 }
 
 window.addEventListener("DOMContentLoaded", startRangoli, false);
