@@ -14,7 +14,7 @@ var Draw = function(pShape) {
     this.ctx.translate(0.5,0.5);
     this.ctx.strokeRect(20,20,150,100);
     this.ctx.strokeStyle = "rgba(255, 255, 51, 0.4)";
-    this.ctx.lineWidth=4;
+    this.ctx.lineWidth=2;
     this.theta = 0;
 }
 
@@ -100,12 +100,12 @@ function startRangoli() {
     }
     varInnerR.onchange = function() {
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
-            var objShape = DrawShapes(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
+            var objShape = DrawShapes(aShapes[itrShape], varOuterR.value, this.value, varDistance.value);
         }
     }
     varDistance.onchange = function() {
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
-            var objShape = DrawShapes(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
+            var objShape = DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, this.value);
         }
     }
 }
