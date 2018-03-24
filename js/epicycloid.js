@@ -27,7 +27,7 @@ Epicycloid.prototype = {
     },
 
     getNextXY: function(theta) {
-        // console.log("Entering into Epicycloid::getNextXY -> theta=", theta);
+        console.log("Entering into Epicycloid::getNextXY -> theta=", theta);
 
         // This is based on https://en.wikipedia.org/wiki/Epicycloid
         var x = ( (this.R + this.r) * Math.cos(theta) ) - ( this.r * Math.cos( this.fract * theta) ) ;
@@ -36,11 +36,12 @@ Epicycloid.prototype = {
         x = this.zoomer(x);
         y = this.zoomer(y);
 
+        console.log(x,y);
         return new Coordinates(x, y);
     },
 
     zoomer: function(value) {
-        return (value * 10) + 350;
+        return (value) + 350;
     },
 
     getMax: function() {
