@@ -67,8 +67,8 @@ function ShapeFactory(type, oR, ir, d) {
         return new Hypocycloid(oR, ir, d);
     if( type === "Hypotrochoid")
         return new Hypotrochoid(oR, ir, d);
-    if( type === "Epitrochoid")
-        return new Epitrochoid(oR, ir, d);
+    if( type === "Epicycloid")
+        return new Epicycloid(oR, ir, d);
     else
         return null;
 }
@@ -87,7 +87,7 @@ function startRangoli() {
     var varInnerR   = document.getElementById("inner_r");
     var varDistance = document.getElementById("distance");
 
-    var aShapes = ["Hypocycloid", "Hypotrochoid", "Epitrochoid" ];
+    var aShapes = ["Hypocycloid", "Hypotrochoid", "Epicycloid" ];
 
     for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
         DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, varDistance.value)
