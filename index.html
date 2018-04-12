@@ -29,19 +29,27 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <div class="slider-wrapper">
-            <input id="outer_R"  class="slider" type="range" min="1" max="24" step="0.5" value="18" list="tickmarks" >
-            <input id="inner_r"  class="slider" type="range" min="1" max="12" step="0.5" value="4" list="tickmarks" >
-            <input id="distance" class="slider" type="range" min="1" max="12" step="0.5" list="tickmarks" >
-            <a id="download"><button type="button">Download</button></a>
-            <datalist id="tickmarks">
-                <option value="1"   label="1">
-                    <option value="12"  label="12">
-                        <option value="24"  label="24">
-                        </datalist>
-                    </div>
-                </header>
+        <header>
+            <div class="slider-wrapper">
+                <div>
+                    <input id="outer_R"  class="slider" type="range" min="6" max="24" step="1" value="18" list="tickmarks" >
+                    <p>outer (R) : <span id="oR"> </span></p>
+                </div>
+                <div>
+                    <input id="inner_r"  class="slider" type="range" min="1" max="12" step="1" value="4" list="tickmarks" >
+                    <p>inner (r) : <span id="ir"> </span></p>
+                </div>
+                <div>
+                    <input id="distance" class="slider" type="range" min="1" max="12" step="1" list="tickmarks" >
+                    <p>distance (d) : <span id="d"> </span></p>
+                </div>
+                <div>
+                    <a id="download"><button type="button">Download</button></a>
+                </div>
+                <datalist id="tickmarks">
+                </datalist>
+            </div>
+        </header>
 
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">

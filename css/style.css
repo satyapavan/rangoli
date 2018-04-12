@@ -4,9 +4,23 @@
 	color: #fff;
 }
 
+#download {
+    padding: 5px;
+}
+.slider-wrapper > div {
+    float: left;
+    padding: 5px;
+    align-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
 .slider-wrapper {
   display: inline-block;
   padding: 0;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
 }
 
 body {

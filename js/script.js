@@ -87,6 +87,10 @@ function startRangoli() {
     var varInnerR   = document.getElementById("inner_r");
     var varDistance = document.getElementById("distance");
 
+    document.getElementById("oR").innerHTML= varOuterR.value;
+    document.getElementById("ir").innerHTML= varInnerR.value;
+    document.getElementById("d").innerHTML= varDistance.value;
+
     var aShapes = ["Hypocycloid", "Hypotrochoid", "Epicycloid" ];
 
     for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
@@ -94,16 +98,23 @@ function startRangoli() {
     }
 
     varOuterR.onchange = function() {
+        document.getElementById("oR").innerHTML= this.value;
+
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
             var objShape = DrawShapes(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
         }
     }
     varInnerR.onchange = function() {
+        document.getElementById("ir").innerHTML= this.value;
+
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
             var objShape = DrawShapes(aShapes[itrShape], varOuterR.value, this.value, varDistance.value);
         }
     }
     varDistance.onchange = function() {
+        document.getElementById("d").innerHTML= this.value;
+
+
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
             var objShape = DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, this.value);
         }
