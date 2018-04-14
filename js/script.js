@@ -16,6 +16,13 @@ var Draw = function(pShape) {
     this.ctx.strokeStyle = "rgba(255, 255, 51, 0.4)";
     this.ctx.lineWidth=2;
     this.theta = 0;
+
+    // Create an empty project and a view for the canvas:
+    paper.setup(this.canvas);
+    // Create a Paper.js Path to draw a line into it:
+    this.path = new paper.Path();
+    // Give the stroke a color
+    this.path.strokeColor = 'yellow';
 }
 
 Draw.prototype = {
@@ -31,9 +38,13 @@ Draw.prototype = {
         do{
             // console.log(itr, this.theta, this.h.getMax());
             objCoOrd = this.h.getNextXY(this.theta);
-            this.ctx.lineTo(objCoOrd.x, objCoOrd.y);
-            this.ctx.stroke();
-            this.ctx.moveTo(objCoOrd.x, objCoOrd.y);
+
+            this.path.add(new paper.Point(objCoOrd.x, objCoOrd.y));
+
+            // this.ctx.lineTo(objCoOrd.x, objCoOrd.y);
+            // this.ctx.stroke();
+            // this.ctx.moveTo(objCoOrd.x, objCoOrd.y);
+
             // this is the step size or increment. too low and there will be rough edges and too low will cause performance issues
             this.theta += (Math.PI / 7500);
             itr += 1;
@@ -97,7 +108,7 @@ function startRangoli() {
         DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, varDistance.value)
     }
 
-    varOuterR.onchange = function() {
+    varOuterR.onchange = function() {        
         document.getElementById("oR").innerHTML= this.value;
 
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
@@ -113,7 +124,6 @@ function startRangoli() {
     }
     varDistance.onchange = function() {
         document.getElementById("d").innerHTML= this.value;
-
 
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
             var objShape = DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, this.value);
