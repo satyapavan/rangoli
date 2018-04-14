@@ -104,7 +104,7 @@ function startRangoli() {
     document.getElementById("ir").innerHTML= varInnerR.value;
     document.getElementById("d").innerHTML= varDistance.value;
 
-    var aShapes = ["Hypocycloid", "Hypotrochoid", "Epicycloid" ];
+    var aShapes = ["Hypocycloid", "Hypotrochoid" ]; // , "Epicycloid" ];
     var aDraw = []; // this will contain the Draw objects, so that they can be modified during later activities.
 
     for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
