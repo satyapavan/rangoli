@@ -10,19 +10,26 @@ var Draw = function(pShape) {
     console.log("Entering into Draw for ", pShape);
 
     this.canvas = document.getElementById(pShape + "-Canvas");
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.translate(0.5,0.5);
-    this.ctx.strokeRect(20,20,150,100);
-    this.ctx.strokeStyle = "rgba(255, 255, 51, 0.4)";
-    this.ctx.lineWidth=2;
-    this.theta = 0;
+
+    // Since we are using paper.js now, no need to use to ctx anymore. 
+    // and the images are more crisp and clear too
+
+    // this.ctx = this.canvas.getContext("2d");
+    // this.ctx.translate(0.5,0.5);
+    // this.ctx.strokeRect(20,20,150,100);
+    // this.ctx.strokeStyle = "rgba(255, 255, 51, 0.4)";
+    // this.ctx.lineWidth=2;
+    // this.theta = 0;
 
     // Create an empty project and a view for the canvas:
     paper.setup(this.canvas);
     // Create a Paper.js Path to draw a line into it:
-    this.path = new paper.Path();
-    // Give the stroke a color
-    this.path.strokeColor = 'yellow';
+    this.path = new paper.Path({
+        strokeColor : 'yellow',
+        strokeWidth : "2",
+        shadowColor : 'red',
+        shadowBlur  : 12
+    });
 }
 
 Draw.prototype = {
@@ -34,7 +41,7 @@ Draw.prototype = {
 
         // without this begin and close path calls, the canvas is not cleared even with clearRect call.
         // this is very very irritating learning
-        this.ctx.beginPath();
+        // this.ctx.beginPath();
         do{
             // console.log(itr, this.theta, this.h.getMax());
             objCoOrd = this.h.getNextXY(this.theta);
@@ -46,13 +53,15 @@ Draw.prototype = {
             // this.ctx.moveTo(objCoOrd.x, objCoOrd.y);
 
             // this is the step size or increment. too low and there will be rough edges and too low will cause performance issues
-            this.theta += (Math.PI / 7500);
+            // with paper.js, 7500 is reduced to 1500. even its working with 500, but the speed is too high for an animation
+            this.theta += (Math.PI / 1500);
             itr += 1;
         } while( itr <= 100 && this.theta <= this.h.getMax());
-        this.ctx.closePath();
+        // this.ctx.closePath();
 
         if(this.theta >= this.h.getMax()) {
             clearInterval(this.oTimeout);
+            this.oTimeout = null;
         }
 
         // console.log("Leaving plotFragment");
@@ -61,7 +70,7 @@ Draw.prototype = {
     plot: function(h) {
         console.log("Entering into Draw::plot");
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.theta = 0; // radians
 
@@ -103,9 +112,11 @@ function startRangoli() {
     document.getElementById("d").innerHTML= varDistance.value;
 
     var aShapes = ["Hypocycloid", "Hypotrochoid", "Epicycloid" ];
+    var aDraw = []; // this will contain the Draw objects, so that they can be modified during later activities.
 
     for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
-        DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, varDistance.value)
+        DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, varDistance.value);
+        aDraw[itrShape] = new Draw(aShapes[itrShape]);
     }
 
     varOuterR.onchange = function() {        
