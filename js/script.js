@@ -192,10 +192,11 @@ function downloadCanvas(link, canvasId, filename) {
  * parameter (=the link element), ID of the canvas and a filename.
 */
 document.getElementById('download').addEventListener('click', function() {
-    var filename = 'rangoli' + '-R' + document.getElementById("outer_R").value
+    var filename = 'R' + document.getElementById("outer_R").value
         + '-r' + document.getElementById("inner_r").value
         + '-d' + document.getElementById("distance").value
         + '.png' ;
 
-    downloadCanvas(this, 'myCanvas', filename );
+    downloadCanvas(this, 'Hypocycloid-Canvas', "Rangoli-Hypocycloid-" + filename );
+    downloadCanvas(this, 'Hypotrochoid-Canvas', "Rangoli-Hypotrochoid-" + filename );
 }, false);
