@@ -93,13 +93,6 @@ function ShapeFactory(type, oR, ir, d) {
         return null;
 }
 
-function DrawShapes(type, oR, ir, d) {
-    console.log("Entering into DrawShapes::", type, oR, ir, d);
-    var objDraw = new Draw(type);
-    var objShape = ShapeFactory(type, oR, ir, d);
-    objDraw.plot(objShape);
-}
-
 function startRangoli() {
 	console.log("Entering into startRangoli");
 
@@ -115,29 +108,58 @@ function startRangoli() {
     var aDraw = []; // this will contain the Draw objects, so that they can be modified during later activities.
 
     for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
-        DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, varDistance.value);
+        var objShape = ShapeFactory(aShapes[itrShape], varOuterR.value, varInnerR.value, varDistance.value);
+
         aDraw[itrShape] = new Draw(aShapes[itrShape]);
+        aDraw[itrShape].plot(objShape);
     }
 
     varOuterR.onchange = function() {        
         document.getElementById("oR").innerHTML= this.value;
 
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
-            var objShape = DrawShapes(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
+            var objShape = ShapeFactory(aShapes[itrShape], this.value, varInnerR.value, varDistance.value);
+                   
+            // clear any traces of previous events
+            if( aDraw[itrShape].oTimeout != null ) {
+                clearInterval(aDraw[itrShape].oTimeout);
+            }
+
+            // then start again with a new object
+            aDraw[itrShape] = new Draw(aShapes[itrShape]);
+            aDraw[itrShape].plot(objShape);
         }
     }
     varInnerR.onchange = function() {
         document.getElementById("ir").innerHTML= this.value;
 
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
-            var objShape = DrawShapes(aShapes[itrShape], varOuterR.value, this.value, varDistance.value);
+            var objShape = ShapeFactory(aShapes[itrShape], varOuterR.value, this.value, varDistance.value);
+          
+            // clear any traces of previous events
+            if( aDraw[itrShape].oTimeout != null ) {
+                clearInterval(aDraw[itrShape].oTimeout);
+            }
+
+            // then start again with a new object
+            aDraw[itrShape] = new Draw(aShapes[itrShape]);
+            aDraw[itrShape].plot(objShape);
         }
     }
     varDistance.onchange = function() {
         document.getElementById("d").innerHTML= this.value;
 
         for( var itrShape = 0; itrShape < aShapes.length; itrShape++) {
-            var objShape = DrawShapes(aShapes[itrShape], varOuterR.value, varInnerR.value, this.value);
+            var objShape = ShapeFactory(aShapes[itrShape], varOuterR.value, this.value, varDistance.value);
+          
+            // clear any traces of previous events
+            if( aDraw[itrShape].oTimeout != null ) {
+                clearInterval(aDraw[itrShape].oTimeout);
+            }
+
+            // then start again with a new object
+            aDraw[itrShape] = new Draw(aShapes[itrShape]);
+            aDraw[itrShape].plot(objShape);
         }
     }
 }
